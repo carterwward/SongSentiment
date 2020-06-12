@@ -9,7 +9,7 @@ genius.verbose = False
 
 
 def get_song_dict(title, artist, clean_ad_libs=False):
-    song_lyrics = genius.search_song(title, artist).to_text().replace("'", QUOTE)
+    song_lyrics = genius.search_song(title, artist).to_text().replace("'", "QUOTE")
     chunks = song_lyrics.split("\n\n")
     chunked = {}
     for chunk in chunks:
