@@ -131,3 +131,4 @@ dmypy.json
 .vscode/
 .venv
 credentials.py
+*.txt
