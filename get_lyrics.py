@@ -15,12 +15,16 @@ def get_song_dict(title, artist, clean_ad_libs=False):
     chunked = {}
     for chunk in chunks:
         part = chunk[chunk.find("[")+1:chunk.find("]")]
+
         chunk_lyrics = chunk[len(part) + 2:].split("\n")
         cleaned_lyrics = []
+
         for line in chunk_lyrics:
             line = re.sub(r'\s*\([^)]*\)\s*', '', line)
+
             if line != "":
                 cleaned_lyrics.append(r"{}".format(str(line)))
+
         chunked[part] = cleaned_lyrics[1:]
 
     return chunked
