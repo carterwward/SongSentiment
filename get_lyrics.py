@@ -9,7 +9,9 @@ genius.verbose = False
 
 
 def get_song_dict(title, artist, clean_ad_libs=False):
+    # Some songs in genius library contain empty sections
     song_lyrics = genius.search_song(title, artist).to_text()
+    # print(song_lyrics)
     chunks = song_lyrics.split("\n\n")
     chunked = {}
     for chunk in chunks:
@@ -17,11 +19,13 @@ def get_song_dict(title, artist, clean_ad_libs=False):
         chunk_lyrics = chunk[len(part) + 2:].split("\n")
         cleaned_lyrics = []
         for line in chunk_lyrics:
+            line = re.sub(r'\s\([^)]*\)', '', line)
             cleaned_lyrics.append(r"{}".format(str(line)))
         chunked[part] = cleaned_lyrics[1:]
 
     return chunked
 
-title = "blkswn"
-artist = "smino"
+title = ""
+artist = "saba"
+
 print(get_song_dict(title, artist))
