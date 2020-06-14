@@ -9,7 +9,7 @@ genius.verbose = False
 
 
 def get_song_dict(title, artist, clean_ad_libs=False):
-    song_lyrics = genius.search_song(title, artist).to_text().replace("'", "QUOTE")
+    song_lyrics = genius.search_song(title, artist).to_text()
     chunks = song_lyrics.split("\n\n")
     chunked = {}
     for chunk in chunks:
@@ -17,13 +17,11 @@ def get_song_dict(title, artist, clean_ad_libs=False):
         chunk_lyrics = chunk[len(part) + 2:].split("\n")
         cleaned_lyrics = []
         for line in chunk_lyrics:
-            chunk_lyrics[chunk_lyrics.index(line)] = line.replace("QUOTE", "'")
-            cleaned_line = ("" + line.encode("utf-8").decode(sys.stdout.encoding))
-            cleaned_lyrics.append(str(cleaned_line).replace("QUOTE", "'"))
+            cleaned_lyrics.append(r"{}".format(str(line)))
         chunked[part] = cleaned_lyrics[1:]
 
     return chunked
 
-title = "doomsday"
-artist = "mf doom"
+title = "blkswn"
+artist = "smino"
 print(get_song_dict(title, artist))
