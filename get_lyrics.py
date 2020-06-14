@@ -17,8 +17,9 @@ def get_song_dict(title, artist, clean_ad_libs=False):
         chunk_lyrics = chunk[len(part) + 2:].split("\n")
         cleaned_lyrics = []
         for line in chunk_lyrics:
+            chunk_lyrics[chunk_lyrics.index(line)] = line.replace("QUOTE", "'")
             cleaned_line = ("" + line.encode("utf-8").decode(sys.stdout.encoding))
-            cleaned_lyrics.append(str(cleaned_line))
+            cleaned_lyrics.append(str(cleaned_line).replace("QUOTE", "'"))
         chunked[part] = cleaned_lyrics[1:]
 
     return chunked
