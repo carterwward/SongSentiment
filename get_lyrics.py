@@ -10,11 +10,11 @@ genius.verbose = False
 nlp = spacy.load("en_core_web_sm")
 
 def get_discography(artist):
-    return 
+    return
 
 
 def lemmatizer(doc):
-    # This takes in a doc of tokens from the NER and lemmatizes them. 
+    # This takes in a doc of tokens from the NER and lemmatizes them.
     # Pronouns (like "I" and "you" get lemmatized to '-PRON-', so I'm removing those.
     doc = [token.lemma_ for token in doc if token.lemma_ != "-PRON-"]
     doc = u"".join(doc)
