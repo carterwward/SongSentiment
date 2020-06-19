@@ -1,5 +1,6 @@
 import lyricsgenius
 from credentials import client_access_token
+import en_core_web_sm
 import re
 import sys
 import spacy
@@ -7,7 +8,10 @@ import json
 
 genius = lyricsgenius.Genius(client_access_token)
 genius.verbose = False
-nlp = spacy.load("en_core_web_sm")
+try:
+    nlp = spacy.load("en_core_web_sm")
+except:
+    nlp = en_core_web_sm.load()
 
 def get_discography(artist):
     return
