@@ -21,7 +21,7 @@ def lemmatizer(doc):
     # This takes in a doc of tokens from the NER and lemmatizes them.
     # Pronouns (like "I" and "you" get lemmatized to '-PRON-', so I'm removing those.
     doc = [token.lemma_ for token in doc if token.lemma_ != "-PRON-"]
-    doc = u"".join(doc)
+    doc = u" ".join(doc)
     return nlp.make_doc(doc)
 
 def remove_stopwords(doc):
