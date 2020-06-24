@@ -22,7 +22,14 @@ def get_discography(artist):
     data = np.empty((0,7))
 
     for song in disco.songs:
-        data = np.vstack((data, np.asarray([song.title, song.artist, song.lyrics, song.album, song.year, " ".join([item["name"] for item in song.featured_artists]), song.producer_artists],object)))
+        # features = ", ".join([item["name"] for item in song.featured_artists])
+        # try:
+        #     print(features.encode('ascii', 'ignore').decode())
+        # except IndexError:
+        #     print(features)
+        data = np.vstack((data, np.asarray([song.title, song.artist, song.lyrics, song.album, song.year, 
+                         ", ".join([item["name"] for item in song.featured_artists]).encode('ascii', 'ignore').decode(), 
+                         song.producer_artists],object)))
     df = pd.DataFrame(data, columns=["title", "artist", "lyrics", "album", "year", "featured_artists", "producers"])
     df.to_csv("artists/" + artist +".csv")
 
