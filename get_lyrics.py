@@ -29,7 +29,7 @@ def get_discography(artist):
                           producers if producers != "" else pd.NA],object)))
 
     df = pd.DataFrame(data, columns=["title", "artist", "lyrics", "album", "year", "featured_artists", "producers"])
-    df.to_csv("artists/" + artist +".csv")
+    df.to_csv("artists/" + artist.replace(" ", '_') +".csv")
 
 def get_song_dict(title, artist, clean_ad_libs=False):
     # Some songs in genius library contain empty sections
@@ -53,4 +53,4 @@ def get_song_dict(title, artist, clean_ad_libs=False):
 
     return chunked
 
-get_discography("saba")
+get_discography("kanye west")
