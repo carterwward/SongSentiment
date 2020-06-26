@@ -11,25 +11,31 @@ import numpy as np
 genius = lyricsgenius.Genius(client_access_token)
 genius.verbose = False
 
+
 def get_discography(artist):
     disco = genius.search_artist(artist)
 
-    data = np.empty((0,7))
+    data = np.empty((0, 7))
 
     for song in disco.songs:
         if song.lyrics == "Transcribing needed":
             continue
 
-        features = ", ".join([item["name"] for item in song.featured_artists]).encode('ascii', 'ignore').decode()
-        producers = ", ".join([item["name"] for item in song.producer_artists]).encode('ascii', 'ignore').decode()
-        art_name = song.artist.encode('ascii', 'ignore').decode().replace("*", '')
+        features = ", ".join([item["name"] for item in song.featured_artists]).encode(
+            'ascii', 'ignore').decode()
+        producers = ", ".join([item["name"] for item in song.producer_artists]).encode(
+            'ascii', 'ignore').decode()
+        art_name = song.artist.encode(
+            'ascii', 'ignore').decode().replace("*", '')
 
-        data = np.vstack((data, np.asarray([song.title, art_name, song.lyrics, song.album, song.year, 
-                          features if features != "" else pd.NA, 
-                          producers if producers != "" else pd.NA],object)))
+        data = np.vstack((data, np.asarray([song.title, art_name, song.lyrics, song.album, song.year,
+                                            features if features != "" else pd.NA,
+                                            producers if producers != "" else pd.NA], object)))
 
-    df = pd.DataFrame(data, columns=["title", "artist", "lyrics", "album", "year", "featured_artists", "producers"])
-    df.to_csv("artists/" + artist.replace(" ", '_') +".csv")
+    df = pd.DataFrame(data, columns=[
+                      "title", "artist", "lyrics", "album", "year", "featured_artists", "producers"])
+    df.to_csv("artists/" + artist.replace(" ", '_') + ".csv")
+
 
 def get_song_dict(title, artist, clean_ad_libs=False):
     # Some songs in genius library contain empty sections
@@ -52,5 +58,6 @@ def get_song_dict(title, artist, clean_ad_libs=False):
         chunked[part] = cleaned_lyrics[1:]
 
     return chunked
+
 
 get_discography("kanye west")
