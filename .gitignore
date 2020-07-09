@@ -134,4 +134,4 @@ credentials.py
 *.txt
 artists
 .DS_Store
-
+test.py
