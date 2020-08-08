@@ -61,13 +61,11 @@ def get_song_dict(title, artist, clean_ad_libs=False):
     return chunked
 
 # TODO: write try and except so that if program fails it restarts itself
-
-
+artists = ['j.i.d'] 
 # TODO: Write feature crawler to pull running discography of all the newly found featured artists
-artists = ["Beyonce", "Madonna", "Noname", "Ari Lennox", "Missy elliott", "Nicki Minaj", "lil Kim", "Janet Jackson",
-           "SZA", "Solange", "Janelle monae", "Mary J. Blige"]
 
 for artist in artists:
     print(artist + " running")
     get_discography(artist)
     print("done")
+ 

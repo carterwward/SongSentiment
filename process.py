@@ -37,14 +37,10 @@ def tokenizer(doc):
     nlp.add_pipe(remove_stopwords, name="stopwords", last=True)
     return nlp(doc)
 
-# custom = spacy.load('en_core_web_sm')
-# document = custom(lyrics)
-# for token in document:
-#     print(token,token.ent_type_)
-
-
-title = "sicko mode"
-artist = "travis scott"
-lyrics = ""
-tokens = tokenizer(lyrics)
-print(tokens)
+if __name__ == "__main__":
+    nlp = spacy.load('en_core_web_sm')
+    discog_df = pd.read_csv('artists/saba.csv')
+    lyrics = discog_df.iloc[0][3]
+    # print(lyrics)
+    doc = tokenizer(lyrics)
+    print(doc)
