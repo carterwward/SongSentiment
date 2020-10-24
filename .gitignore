@@ -136,3 +136,4 @@ genius_credentials.py
 artists
 .DS_Store
 test.py
+spotify_credentials.py
