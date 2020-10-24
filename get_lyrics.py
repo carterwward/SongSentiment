@@ -1,5 +1,5 @@
 import lyricsgenius
-from credentials import client_access_token
+from genius_credentials import client_access_token
 import en_core_web_sm
 import re
 import sys

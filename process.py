@@ -31,7 +31,7 @@ def remove_stopwords(doc):
 
 
 def tokenizer(doc):
-    stops = ["yeah", '\n']
+    stops = ["yeah", '\n', 'intro', 'hook', 'verse', 'yes', 'oh', 'chorus']
     nlp.Defaults.stop_words.update(stops)
     nlp.add_pipe(lemmatizer, name="lemmatizer", after="ner")
     nlp.add_pipe(remove_stopwords, name="stopwords", last=True)

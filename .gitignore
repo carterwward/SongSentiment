@@ -130,7 +130,7 @@ dmypy.json
 
 .vscode/
 .venv
-credentials.py
+genius_credentials.py
 *.txt
 artists
 .DS_Store
