@@ -21,8 +21,6 @@ genius.excluded_terms = ["(Remix)", "(Live)"] # Exclude songs with these words i
 def get_discography(artist):
     print("...")
     
-   
-
     disco = genius.search_artist(artist)
 
     discog = {}
