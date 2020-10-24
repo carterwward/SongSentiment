@@ -52,6 +52,7 @@ def get_valence(artist_name):
             # load song_info with song dict with song name as key
             song_info[song_name] = song_dict
     print(song_info)
+    #TODO fix so that we aren't overwriting the album of a song just because it is the single of that album
 
 
 get_valence("billy joel")
