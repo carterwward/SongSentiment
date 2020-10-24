@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+songSentiment.code-workspace
 
 # C extensions
 *.so
