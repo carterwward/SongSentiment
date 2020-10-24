@@ -5,6 +5,11 @@ sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(SPOTIPY
 
 def get_valence(artist_name):
     results = sp.search(q = "artist:" + artist_name, type = "artist")
-    print(results)
+    print(results['artists']['items'])
 
-get_valence('Kendrick Lamar')
+    # initialize uri variable as empty string
+    # iterate over list of artist dictionaries results['artists']['items']
+        # check to see if all lower case version of artist_name and name in each dict are equivalent
+            # read uri into variable and break from loop
+
+get_valence('kendrick lamar')
