@@ -10,6 +10,9 @@ import numpy as np
 
 genius = lyricsgenius.Genius(client_access_token)
 genius.verbose = False
+genius.remove_section_headers = True # Remove section headers (e.g. [Chorus]) from lyrics when searching
+#genius.skip_non_songs = False # Include hits thought to be non-songs (e.g. track lists)
+genius.excluded_terms = ["(Remix)", "(Live)"] # Exclude songs with these words in their title
 
 # get_discography will use Genius API to pull all the song names, lyrics, and artists featured on the song
 # how the API is formatted, it will start by extracting the most popular song on Genius.com, and next song
@@ -17,6 +20,9 @@ genius.verbose = False
 # is the primary artist, not a featured artist.
 def get_discography(artist):
     print("...")
+    
+   
+
     disco = genius.search_artist(artist)
 
     discog = {}
@@ -32,14 +38,7 @@ def get_discography(artist):
         song_dict['features'] = features
         song_dict['album_name'] = song.album
         song_dict['lyrics'] = song.lyrics
-        #print(song)
-        #song = str(song).split('"')[1:2]
-        #seperator = ' '
-        #song = seperator.join(song)
         discog[song.title] = song_dict
-        
-       
-        #print(song)
 
     #df.to_csv("artists/" + artist.replace(" ", '_') + ".csv")
     print(discog)
