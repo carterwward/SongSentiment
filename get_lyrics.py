@@ -13,9 +13,8 @@ genius.verbose = False
 
 # get_discography will use Genius API to pull all the song names, lyrics, and artists featured on the song
 # how the API is formatted, it will start by extracting the most popular song on Genius.com, and next song
-# is less popular, so on until it reaches the least popular song.  It will NOT pull songs that the artist
-# passed as paramater is featured on.  Ex/ JPEGMAFIA's top song on Genius.com is a song he is featured on.
-# get_discography will NOT add that song to JPEGMAFIA's discography
+# is less popular, so on until it reaches the least popular song.  It will only pull songs where the artist
+# is the primary artist, not a featured artist.
 def get_discography(artist):
     print("...")
     disco = genius.search_artist(artist)
@@ -33,10 +32,18 @@ def get_discography(artist):
         song_dict['features'] = features
         song_dict['album_name'] = song.album
         song_dict['lyrics'] = song.lyrics
-        discog[song] = song_dict
+        #print(song)
+        #song = str(song).split('"')[1:2]
+        #seperator = ' '
+        #song = seperator.join(song)
+        discog[song.title] = song_dict
+        
+       
+        #print(song)
 
     #df.to_csv("artists/" + artist.replace(" ", '_') + ".csv")
     print(discog)
+    
     #print(song_dict)
 
 
@@ -63,7 +70,7 @@ def get_song_dict(title, artist, clean_ad_libs=False):
     return chunked
 
 # TODO: write try and except so that if program fails it restarts itself
-artists = ['Joy Division'] 
+artists = ['Boyscott'] 
 # TODO: Write feature crawler to pull running discography of all the newly found featured artists
 
 for artist in artists:
