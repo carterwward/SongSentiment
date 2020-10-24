@@ -31,16 +31,13 @@ def get_valence(artist_name):
 
     song_info = {}
     song_names = {}
-    track_uris = []
-    found = set()
     for album in albums['albums']:
+        track_uris = []
         album_name = album['name']
-        print("album", album_name)
         # iterate over tracks
         for track in album['tracks']['items']:
             # get audio features data via uri
             track_uris.append(track['uri'])
-            print("track",track['name'])
             song_names[track['uri']] = track['name']
         audio_features = sp.audio_features(track_uris)
         # add valence and album name to track dict
@@ -57,4 +54,4 @@ def get_valence(artist_name):
     print(song_info)
 
 
-get_valence("99 neighbors")
+get_valence("billy joel")
