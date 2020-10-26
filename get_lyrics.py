@@ -43,29 +43,6 @@ def get_discography(artist):
     
     #print(song_dict)
 
-
-def get_song_dict(title, artist, clean_ad_libs=False):
-    # Some songs in genius library contain empty sections
-    song_lyrics = genius.search_song(title, artist).to_text()
-    chunks = song_lyrics.split("\n\n")
-    chunked = {}
-    exprs = r"\s*\([^)]*\)\s*"
-    for chunk in chunks:
-        part = chunk[chunk.find('[')+1:chunk.find(']')]
-
-        chunk_lyrics = chunk[len(part) + 2:].split('\n')
-        cleaned_lyrics = []
-
-        for line in chunk_lyrics:
-            line = re.sub(exprs, '', line)
-
-            if line != "":
-                cleaned_lyrics.append(r"{}".format(str(line)))
-
-        chunked[part] = cleaned_lyrics[1:]
-
-    return chunked
-
 # TODO: write try and except so that if program fails it restarts itself
 artists = ['Boyscott'] 
 # TODO: Write feature crawler to pull running discography of all the newly found featured artists
