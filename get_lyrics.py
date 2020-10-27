@@ -36,6 +36,7 @@ def get_discography(artist):
         song_dict['features'] = features
         song_dict['album_name'] = song.album
         song_dict['lyrics'] = song.lyrics
+        song_dict['year'] = song.year
         discog[song.title] = song_dict
 
     #df.to_csv("artists/" + artist.replace(" ", '_') + ".csv")
