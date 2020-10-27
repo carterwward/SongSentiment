@@ -30,6 +30,7 @@ def get_discography(artist):
         if song.lyrics == "Transcribing needed":
             continue
 
+           
         features = ", ".join([item["name"] for item in song.featured_artists]).encode(
             'ascii', 'ignore').decode()
 
@@ -39,17 +40,28 @@ def get_discography(artist):
         song_dict['year'] = song.year
         discog[song.title] = song_dict
 
-    #df.to_csv("artists/" + artist.replace(" ", '_') + ".csv")
-    print(discog)
+    return discog
     
-    #print(song_dict)
+# TODO: implement getting the full disocgraphy for all features artist in a given artists full disography
+def get_featured_artist_discography(artist):
+    # set is underordered and has unique elements
+    artist_set = set()
+    print("...")
+    primary_artist_discography = get_discography(artist)
+    for c in primary_artist_discography:
+        artist_set.add(primary_artist_discography[c]["features"])
+    
+    print(artist_set)
+
+
 
 # TODO: write try and except so that if program fails it restarts itself
-artists = ['Boyscott'] 
+artists = ['JPEGMAFIA'] 
 # TODO: Write feature crawler to pull running discography of all the newly found featured artists
 
 for artist in artists:
     print(artist + " running")
-    get_discography(artist)
+    #get_discography(artist)
+    get_featured_artist_discography(artist)
     print("done")
  
