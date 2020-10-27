@@ -1,4 +1,5 @@
 import spotipy
+import re
 from spotipy.oauth2 import SpotifyClientCredentials
 from spotify_credentials import SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET))
@@ -31,12 +32,18 @@ def get_valence(artist_name):
 
     song_info = {}
     song_names = {}
+    album_set= set() 
     for album in albums['albums']:
         track_uris = []
-        album_name = album['name']
+        album_name = re.sub(r'[\(\[].*?[\)\]]', '', album['name']).rstrip()
+        if album_name in album_set:
+            continue
+        album_set.add(album_name)
+        print(album_name, album['type'])
         # iterate over tracks
         for track in album['tracks']['items']:
             # get audio features data via uri
+            # print(track.keys())
             track_uris.append(track['uri'])
             song_names[track['uri']] = track['name']
         audio_features = sp.audio_features(track_uris)
@@ -51,8 +58,7 @@ def get_valence(artist_name):
             song_dict["album"] = album_name
             # load song_info with song dict with song name as key
             song_info[song_name] = song_dict
-    print(song_info)
+    # print(song_info)
     #TODO fix so that we aren't overwriting the album of a song just because it is the single of that album
 
-
-get_valence("billy joel")
+get_valence("chance the rapper")
