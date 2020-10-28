@@ -37,8 +37,6 @@ def get_valence(artist_name):
     for album in albums['albums']:
         track_uris = []
         album_name = re.sub(r'[\(\[].*?[\)\]]', '', album['name']).rstrip().lower()
-        if album_name == 'innerstellar love':
-            print(album['total_tracks'])
 
         if album_name in album_set:
             continue
@@ -60,13 +58,13 @@ def get_valence(artist_name):
 
             # if the song has a feature, remove that part of the name
             # print(song_name)
-            if "feat." in song_name or " remix)" in song_name:
+            if "feat." in song_name:
                 # print(song_name)
                 song_name = re.sub(r'[\(\[].*?[\)\]]', '', song_name).rstrip()
                 # print(song_name)
             
-            if '- remix' in song_name:
-                song_name = re.sub(r'-.*?remix', '', song_name).rstrip()
+            if '- remix' in song_name or " remix)" in song_name:
+                continue
 
             # load dict with valence and album
             song_dict["valence"] = audio_feature['valence']

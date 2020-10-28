@@ -43,6 +43,7 @@ def get_discography(artist):
     return discog
     
 # TODO: implement getting the full disocgraphy for all features artist in a given artists full disography
+# I realized for this to work we also have to be calling the spotify API, so maybe we should put this function in a different file
 def get_featured_artist_discography(artist):
     # set is underordered and has unique elements
     artist_set = set()
