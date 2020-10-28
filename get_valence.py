@@ -31,15 +31,19 @@ def get_valence(artist_name):
     # print(type(albums['albums']))
 
     song_info = {}
+    sin_songs_info = {}
     song_names = {}
     album_set= set() 
     for album in albums['albums']:
         track_uris = []
-        album_name = re.sub(r'[\(\[].*?[\)\]]', '', album['name']).rstrip()
+        album_name = re.sub(r'[\(\[].*?[\)\]]', '', album['name']).rstrip().lower()
+        if album_name == 'innerstellar love':
+            print(album['total_tracks'])
+
         if album_name in album_set:
             continue
         album_set.add(album_name)
-        print(album_name, album['type'])
+        num_tracks = album['total_tracks']
         # iterate over tracks
         for track in album['tracks']['items']:
             # get audio features data via uri
@@ -52,13 +56,38 @@ def get_valence(artist_name):
             # initialize dict for song
             song_dict = {}
             # retrieve name using uri
-            song_name = song_names[audio_feature['uri']]
+            song_name = song_names[audio_feature['uri']].lower()
+
+            # if the song has a feature, remove that part of the name
+            # print(song_name)
+            if "feat." in song_name or " remix)" in song_name:
+                # print(song_name)
+                song_name = re.sub(r'[\(\[].*?[\)\]]', '', song_name).rstrip()
+                # print(song_name)
+            
+            if '- remix' in song_name:
+                song_name = re.sub(r'-.*?remix', '', song_name).rstrip()
+
             # load dict with valence and album
             song_dict["valence"] = audio_feature['valence']
             song_dict["album"] = album_name
             # load song_info with song dict with song name as key
-            song_info[song_name] = song_dict
-    # print(song_info)
-    #TODO fix so that we aren't overwriting the album of a song just because it is the single of that album
+            if num_tracks > 4:
+                song_info[song_name] = song_dict
+            else: 
+                sin_songs_info[song_name] = song_dict
+ 
+    single_set = set(sin_songs_info.keys()) - set(song_info.keys())
 
-get_valence("chance the rapper")
+    for single_name in single_set:
+        song_info[single_name] = sin_songs_info[single_name]
+
+    for key, item in song_info.items():
+        print(key, item['album'])
+
+    #TODO fix so that we aren't overwriting the album of a song just because it is the single of that album
+        # TODO Push singles and albums to their own dictionaries and then compare keys at the end to only add singles not on albums
+            # Use number of songs on album to check 
+    # TODO Clean song names
+
+get_valence("thundercat")
