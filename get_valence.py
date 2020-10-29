@@ -1,5 +1,6 @@
 import spotipy
 import re
+import string
 from spotipy.oauth2 import SpotifyClientCredentials
 from spotify_credentials import SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET))
@@ -55,7 +56,6 @@ def get_valence(artist_name):
             song_dict = {}
             # retrieve name using uri
             song_name = song_names[audio_feature['uri']].lower()
-
             # if the song has a feature, remove that part of the name
             # print(song_name)
             if "feat." in song_name:
@@ -65,6 +65,8 @@ def get_valence(artist_name):
             
             if '- remix' in song_name or " remix)" in song_name:
                 continue
+
+            song_name = song_name.translate(str.maketrans('', '', string.punctuation)).replace('  ', ' ')
 
             # load dict with valence and album
             song_dict["valence"] = audio_feature['valence']
@@ -79,13 +81,6 @@ def get_valence(artist_name):
 
     for single_name in single_set:
         song_info[single_name] = sin_songs_info[single_name]
+    return song_info
 
-    for key, item in song_info.items():
-        print(key, item['album'])
-
-    #TODO fix so that we aren't overwriting the album of a song just because it is the single of that album
-        # TODO Push singles and albums to their own dictionaries and then compare keys at the end to only add singles not on albums
-            # Use number of songs on album to check 
-    # TODO Clean song names
-
-get_valence("thundercat")
+get_valence('99 neighbors')
