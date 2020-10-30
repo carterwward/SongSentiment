@@ -83,4 +83,4 @@ def get_valence(artist_name):
         song_info[single_name] = sin_songs_info[single_name]
     return song_info
 
-get_valence('99 neighbors')
+# print(get_valence('jpegmafia'))

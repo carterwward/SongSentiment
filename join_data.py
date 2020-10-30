@@ -2,8 +2,8 @@ from get_valence import get_valence
 from get_lyrics import get_discography
 
 def join_spotify_genius(artist):
-    genius_dict = get_discography(artist)
     spotify_dict = get_valence(artist)
+    genius_dict = get_discography(artist)
     common_keys = set(genius_dict.keys()) & set(spotify_dict.keys())
     print("in spot not genius Keys:", set(spotify_dict.keys()) - set(genius_dict.keys()))
     print("in genius not spot Keys:", set(genius_dict.keys()) - set(spotify_dict.keys()))
@@ -33,4 +33,4 @@ def get_featured_artist_discography(artist):
 
 
     print(artist_set)
-join_spotify_genius('thundercat')
+join_spotify_genius('jpegmafia')
