@@ -5,19 +5,20 @@ def join_spotify_genius(artist):
     spotify_dict = get_valence(artist)
     genius_dict = get_discography(artist)
     common_keys = set(genius_dict.keys()) & set(spotify_dict.keys())
-    print("in spot not genius Keys:", set(spotify_dict.keys()) - set(genius_dict.keys()))
-    print("in genius not spot Keys:", set(genius_dict.keys()) - set(spotify_dict.keys()))
+    print("in spot not genius Keys:", set(spotify_dict.keys()) - set(genius_dict.keys()), '\n')
+    print("in genius not spot Keys:", set(genius_dict.keys()) - set(spotify_dict.keys()), '\n')
     print("Common Keys:", common_keys)
     full_dict = {}
     for key in common_keys:
         song_dict = {}
-        song_dict['valence'] = spotify_dict['valence']
-        song_dict['album'] = spotify_dict['album']
-        song_dict['lyrics'] = genius_dict['lyrics']
-        song_dict['year'] = genius_dict['year']
-        song_dict['features'] = genius_dict['features']
+        print(spotify_dict.keys())
+        print(genius_dict)
+        song_dict['valence'] = spotify_dict[key]['valence']
+        song_dict['album'] = spotify_dict[key]['album']
+        song_dict['lyrics'] = genius_dict[key]['lyrics']
+        song_dict['year'] = genius_dict[key]['year']
+        song_dict['features'] = genius_dict[key]['features']
         full_dict[key] = song_dict
-
     return full_dict
 
     
