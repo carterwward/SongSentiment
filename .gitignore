@@ -137,3 +137,4 @@ artists
 .DS_Store
 test.py
 spotify_credentials.py
+firebase_cred.json
