@@ -132,7 +132,7 @@ dmypy.json
 .vscode/
 .venv
 genius_credentials.py
-*.txt
+thundercat_genius.txt
 artists
 .DS_Store
 test.py
