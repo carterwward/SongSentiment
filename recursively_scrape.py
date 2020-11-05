@@ -7,24 +7,28 @@ from join_data import join_spotify_genius
 def get_featured_artist_discography(discog_set, artist_dict, artist):
 
     # check if the length of the keys of artist dict is already 100 or greater
-        # if yes, just return the artist dict passed in
-
+    # if yes, just return the artist dict passed in
+    if (artist_dict.keys() > 100):
+        return artist_dict
+    else:
     # Get primary artist discog
-    primary_artist_discography = join_spotify_genius(artist)
+        primary_artist_discography = join_spotify_genius(artist)
 
-    # add primary artist discography to artist_dict
+        # add primary artist discography to artist_dict
+        artist_dict[artist] = primary_artist_discography
+        # iterate over dictionary in discography dict
+        for id, items in primary_artist_discography.items():
 
-    # iterate over dictionary in discography dict
-    for id, items in primary_artist_discography.items():
+            # iterate over featured artists in each featured list
+            for artist in items['features']:
+                # if artist not in discog set and artist not in keys of artist dict
+                if(not(artist in discog_set) and not(artist in artist_dict)):
+                    # call get_featured_artist_discography and read into sub_artist dict
+                    sub_artist = get_featured_artist_discography(artist)
+                    # add only new keys to artist dict
+                    
 
-        # iterate over featured artists in each featured list
-        for artist in items['features']:
-            # if artist not in discog set and artist not in keys of artist dict
-                # call get_featured_artist_discography and read into sub_artist dict
-                # add only new keys to artist dict
-       
-                   
-    return artist_dict
-    
+    return artist_dict  
 
-# get_featured_artist_discography("redveil")
+
+get_featured_artist_discography("redveil")
