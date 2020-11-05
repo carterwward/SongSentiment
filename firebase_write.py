@@ -23,3 +23,11 @@ def read_artist_dict(artist_name):
     for doc in docs:
         artist_dict[doc.id] = doc.to_dict()
     return artist_dict
+
+def read_song_dict(artist_name, song_name):
+    doc_ref = db.collection(artist_name).document(song_name)
+    doc = doc_ref.get()
+    if doc.exists:
+        return doc.to_dict()
+    else: 
+        
