@@ -19,3 +19,7 @@ def write_artist_dict(artist_name, artist_dict):
 def read_artist_dict(artist_name):
     artist_dict = db.collection(artist_name)
     docs =  artist_dict.stream()
+    artist_dict = {}
+    for doc in docs:
+        artist_dict[doc.id] = doc.to_dict()
+    return artist_dict
