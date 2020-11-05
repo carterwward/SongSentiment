@@ -33,7 +33,7 @@ def remove_stopwords(doc):
 
 def tokenizer(doc):
     nlp = spacy.load('en_core_web_sm')
-    stops = ["yeah", '\n', 'intro', 'hook', 'verse', 'yes', 'oh', 'chorus']
+    stops = ["yeah", '\n', 'intro', 'hook', 'verse', 'yes', 'oh', 'chorus', 'like', 'hey']
     nlp.Defaults.stop_words.update(stops)
     nlp.add_pipe(lemmatizer, name="lemmatizer", after="ner")
     nlp.add_pipe(remove_stopwords, name="stopwords", last=True)
@@ -49,7 +49,7 @@ if __name__ == "__main__":
         doc = tokenizer(lyrics)
         print(doc,"\n\n")
     #gets just an artist's song
-    # song = read_song_dict()
+    # song = read_song_dict('99 neighbors','work')
     # lyrics = song['lyrics']
     # doc = tokenizer(lyrics)
     # print(doc)
