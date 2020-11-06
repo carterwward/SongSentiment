@@ -29,5 +29,4 @@ def read_song_dict(artist_name, song_name):
     doc = doc_ref.get()
     if doc.exists:
         return doc.to_dict()
-    else: 
-        
+    # else: 
