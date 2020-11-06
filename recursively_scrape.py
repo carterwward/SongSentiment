@@ -8,7 +8,7 @@ def get_featured_artist_discography(discog_set, artist_dict, artist):
 
     # check if the length of the keys of artist dict is already 100 or greater
     # if yes, just return the artist dict passed in
-    if (artist_dict.keys() > 100):
+    if (len(artist_dict.keys()) > 100):
         return artist_dict
     else:
     # Get primary artist discog
@@ -24,11 +24,19 @@ def get_featured_artist_discography(discog_set, artist_dict, artist):
                 # if artist not in discog set and artist not in keys of artist dict
                 if(not(artist in discog_set) and not(artist in artist_dict)):
                     # call get_featured_artist_discography and read into sub_artist dict
-                    sub_artist = get_featured_artist_discography(artist)
+                    sub_artist = get_featured_artist_discography(discog_set, artist_dict, artist)
                     # add only new keys to artist dict
+                    # get a set of all keys from sub_artist that are not in artist_dict
+                    missing_keys = set(sub_artist.keys()) - set(artist_dict.keys())
+                    # iterate over set and add items and keys to sub_artist that are in that set to artist_dict
+                    for key in missing_keys:
+                        artist_dict[key] = sub_artist[key]
+                   
                     
-
+    # return artist_dict
     return artist_dict  
 
 
-get_featured_artist_discography("redveil")
+discog_set = set()
+artist_dict = {}
+print(get_featured_artist_discography(discog_set, artist_dict, "redveil"))
