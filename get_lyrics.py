@@ -5,6 +5,7 @@ import re
 import pandas as pd
 import string
 import numpy as np
+# TODO Find a way to also get songs where artist is a co-cotributor (not featured)
 
 genius = lyricsgenius.Genius(client_access_token)
 genius.verbose = False
