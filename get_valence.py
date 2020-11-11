@@ -58,7 +58,7 @@ def get_valence(artist_name):
             song_name = song_names[audio_feature['uri']].lower()
             # if the song has a feature, remove that part of the name
             # print(song_name)
-            if "feat." in song_name:
+            if "feat." in song_name or '(with' in song_name:
                 # print(song_name)
                 song_name = re.sub(r'[\(\[].*?[\)\]]', '', song_name).rstrip()
                 # print(song_name)

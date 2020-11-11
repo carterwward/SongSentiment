@@ -5,6 +5,7 @@ import re
 import pandas as pd
 import string
 import numpy as np
+# TODO Find a way to also get songs where artist is a co-cotributor (not featured)
 
 genius = lyricsgenius.Genius(client_access_token)
 genius.verbose = False
@@ -18,28 +19,31 @@ genius.excluded_terms = ["(Remix)", "(Live)"] # Exclude songs with these words i
 # is the primary artist, not a featured artist.
 def get_discography(artist):
     print(artist, "...")
-    
-    disco = genius.search_artist(artist)
+    try:
+        disco = genius.search_artist(artist)
 
-    discog = {}
+        discog = {}
 
-    for song in disco.songs:
-        song_dict = {}
-        if song.lyrics == "Transcribing needed":
-            continue
+        for song in disco.songs:
+            song_dict = {}
+            if song.lyrics == "Transcribing needed":
+                continue
 
-           
-        features = [feature_dict['name'] for feature_dict in song.featured_artists]
+            
+            features = [feature_dict['name'] for feature_dict in song.featured_artists]
 
-        song_dict['features'] = features
-        song_dict['album_name'] = song.album
-        song_dict['lyrics'] = song.lyrics
-        song_dict['year'] = song.year
-        song_name = song.title.encode('ascii', 'ignore').decode().lower()
-        song_name = song_name.translate(str.maketrans('', '', string.punctuation)).replace('  ', ' ')
-        discog[song_name] = song_dict
+            song_dict['features'] = features
+            song_dict['album_name'] = song.album
+            song_dict['lyrics'] = song.lyrics
+            song_dict['year'] = song.year
+            song_name = song.title.encode('ascii', 'ignore').decode().lower()
+            song_name = song_name.translate(str.maketrans('', '', string.punctuation)).replace('  ', ' ')
+            discog[song_name] = song_dict
 
-    return discog
+        return discog
+    except:
+        print('restart')
+        get_discography(artist)
     
 
  
