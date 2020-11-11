@@ -40,17 +40,17 @@ def tokenizer(doc):
     return nlp(doc)
 
 
-# if __name__ == "__main__":
-#     #gets an artist's full dictionary
-#     discog = read_artist_dict("99 neighbors")
-#     for song in discog.values():
-#         lyrics = song["lyrics"]
-#         lyrics = lyrics.lower()
-#         doc = tokenizer(lyrics)
-#         print(doc,"\n\n")
-#     #gets just an artist's song
-#     # song = read_song_dict()
-#     # lyrics = song['lyrics']
-#     # doc = tokenizer(lyrics)
-#     # print(doc)
+if __name__ == "__main__":
+    #gets an artist's full dictionary
+    discog = read_artist_dict("99 neighbors")
+    for song in discog.values():
+        lyrics = song["lyrics"]
+        lyrics = lyrics.lower()
+        doc = tokenizer(lyrics)
+        print(doc,"\n\n")
+    #gets just an artist's song
+    # song = read_song_dict()
+    # lyrics = song['lyrics']
+    # doc = tokenizer(lyrics)
+    # print(doc)
 
