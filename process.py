@@ -31,26 +31,27 @@ def remove_stopwords(doc):
     return doc
 
 
-def tokenizer(doc):
+def lyric_tokenizer(doc):
     nlp = spacy.load('en_core_web_sm')
-    stops = ["yeah", '\n', 'intro', 'hook', 'verse', 'yes', 'oh', 'chorus']
+    stops = ["yeah", '\n', 'intro', 'hook', 'verse', 'yes', 'oh', 'chorus', 'like', 'hey', 'okay',
+    'uh', 'blah', 'ooooooh', 'woah', 'la', 'aight', 'whoa', 'til', 'o', 'huh']
     nlp.Defaults.stop_words.update(stops)
     nlp.add_pipe(lemmatizer, name="lemmatizer", after="ner")
     nlp.add_pipe(remove_stopwords, name="stopwords", last=True)
     return nlp(doc)
 
 
-if __name__ == "__main__":
-    #gets an artist's full dictionary
-    discog = read_artist_dict("99 neighbors")
-    for song in discog.values():
-        lyrics = song["lyrics"]
-        lyrics = lyrics.lower()
-        doc = tokenizer(lyrics)
-        print(doc,"\n\n")
-    #gets just an artist's song
-    # song = read_song_dict()
-    # lyrics = song['lyrics']
-    # doc = tokenizer(lyrics)
-    # print(doc)
+# if __name__ == "__main__":
+#     #gets an artist's full dictionary
+#     discog = read_artist_dict("99 neighbors")
+#     for song in discog.values():
+#         lyrics = song["lyrics"]
+#         lyrics = lyrics.lower()
+#         doc = tokenizer(lyrics)
+#         print(doc,"\n\n")
+#     #gets just an artist's song
+#     # song = read_song_dict()
+#     # lyrics = song['lyrics']
+#     # doc = tokenizer(lyrics)
+#     # print(doc)
 
