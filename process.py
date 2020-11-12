@@ -26,7 +26,7 @@ def lemmatizer(doc):
 
 def remove_stopwords(doc):
     # TODO: add words for sections of songs,
-    doc = [token for token in doc if token.is_stop != True and token.is_punct !=
+    doc = [str(token) for token in doc if token.is_stop != True and token.is_punct !=
            True and token.is_digit != True and token.is_space != True]
     return doc
 
