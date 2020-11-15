@@ -33,7 +33,7 @@ def build_model():
     print(tfidf_vectorizer_matrix)
 
 
-
+# TODO: Turn this into a function that takes an artist name and song name and returns the top 3 tf-idf scores for that song
 # retrieve first vector(tf-idf values for song at index 0)
 # first_vector=tfidf_vectorizer_vectors[0]
 # put tf-idf values for first vector in df to get a glance at TF-IDF values per song

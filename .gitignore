@@ -138,3 +138,4 @@ artists
 test.py
 spotify_credentials.py
 firebase_cred.json
+twitter_cred.py
