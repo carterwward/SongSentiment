@@ -9,9 +9,18 @@ def build_model():
     artist_name = "joy division"
     data_dict = read_artist_dict(artist_name)
     corpus = [song_dict['lyrics'] for song_dict in data_dict.values()]
-    #TODO: read valence values into list like line above and categorize as pos or neg
+    #read valence values into list
+    valence = [song_dict['valence'] for song_dict in data_dict.values()]
+    #list of valence values as pos(1) or neg(0) for the logistic regression model
+    lr_valence = []
+    for song_valence in valence:
+        if song_valence < 0.5:
+            lr_valence.append(0)
+        else:
+            lr_valence.append(1)
 
-    # TODO: read song names into list like in lines 11 and 12
+    #read song names into list
+    song_names = [song_dict for song_dict in data_dict]
 
     # print(corpus[2])
     # print(corpus[0])
@@ -19,16 +28,15 @@ def build_model():
     tokenized_docs = [' '.join(lyric_tokenizer(doc)) for doc in corpus]
 
     # Create vectorizer object
-    tfidf_vectorizer=TfidfVectorizer(analyzer='word', lowercase=True) 
+    tfidf_vectorizer=TfidfVectorizer(analyzer='word', lowercase=True)
     # fit and transform tokenized lyrics
     tfidf_vectorizer_vectors=tfidf_vectorizer.fit_transform(tokenized_docs)
 
     # get tokens
     lyric_features = tfidf_vectorizer.get_feature_names()
-    # Create 
+    # Create
     tfidf_vectorizer_matrix = tfidf_vectorizer_vectors.toarray()
     print(tfidf_vectorizer_matrix)
-        
 
 
 
