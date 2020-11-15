@@ -9,19 +9,13 @@ def build_model():
     artist_name = "joy division"
     data_dict = read_artist_dict(artist_name)
     corpus = [song_dict['lyrics'] for song_dict in data_dict.values()]
-    #read valence values into list
-    valence = [song_dict['valence'] for song_dict in data_dict.values()]
-    #list of valence values as pos(1) or neg(0) for the logistic regression model
-    lr_valence = []
-    for song_valence in valence:
-        if song_valence < 0.5:
-            lr_valence.append(0)
-        else:
-            lr_valence.append(1)
+    #Categorize valence and read into list
+    lr_valence = [1 if song_dict['valence'] > 0.5 else 0 for song_dict in data_dict.values()]
 
     #read song names into list
-    song_names = [song_dict for song_dict in data_dict]
-
+    song_names = [song_name for song_name in data_dict.keys()]
+    print(song_names)
+    print(lr_valence)
     # print(corpus[2])
     # print(corpus[0])
     # Tokenize before hand using spacy
