@@ -6,6 +6,7 @@ songSentiment.code-workspace
 
 # C extensions
 *.so
+*.ipynb
 
 # Distribution / packaging
 .Python
