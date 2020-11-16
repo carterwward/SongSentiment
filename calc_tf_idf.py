@@ -14,7 +14,8 @@ def get_song_tf_idf(artist_name, song_name):
     tfidf_vectorizer_vectors=tfidf_vectorizer.fit_transform(corpus)
 
     song_index = list(data_dict.keys()).index(song_name)
-    song_vector = tfidf_vectorizer_vectors[song_index]
+    song_vector = tfidf_vectorizer_vectors[song_index].toarray()
+    return song_vector
     df = pd.DataFrame(song_vector.T.todense(), index=tfidf_vectorizer.get_feature_names(), columns=["tfidf"]) 
     df = df.sort_values(by=["tfidf"],ascending=False)
     print(df.head(20))
