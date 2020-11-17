@@ -5,6 +5,7 @@ import re
 import pandas as pd
 import string
 import numpy as np
+import time
 # TODO Find a way to also get songs where artist is a co-cotributor (not featured)
 
 genius = lyricsgenius.Genius(client_access_token)
@@ -42,6 +43,7 @@ def get_discography(artist):
 
         return discog
     except:
+        time.sleep(60)
         print('restart')
         get_discography(artist)
     

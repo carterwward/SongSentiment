@@ -4,12 +4,11 @@ import time
 
 def scrape_artists(artist_names):
     for artist_name in artist_names:
-        time.sleep(30)
         artist_dict = join_spotify_genius(artist_name)
 
         write_artist_dict(artist_name, artist_dict)
+        time.sleep(40)
 
 if __name__ == "__main__":
-    artist_names = ['mick jenkins', 'femdot', 'parliament', 'wavves', 'kanye west', 'joey bada$$', 'billy joel']
+    artist_names = ['eminem', 'justin bieber', 'nirvana', 'prince', 'queen', 'sza', 'ari lennox']
     scrape_artists(artist_names)
-    
