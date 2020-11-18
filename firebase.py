@@ -6,9 +6,6 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 def write_artist_dict(artist_name: str, artist_dict: dict) -> None:
-    """
-    
-    """
     for song, info in artist_dict.items():
         if song == '':
             continue
