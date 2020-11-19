@@ -145,5 +145,5 @@ def scrape_artists(artist_names):
         time.sleep(40)
 
 if __name__ == "__main__":
-    artist_names = ['vince staples']
+    artist_names = []
     scrape_artists(artist_names)
