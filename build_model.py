@@ -10,6 +10,15 @@ import pandas as pd
 def tokenize_lyrics(lyrics_list):
     return [' '.join(lyric_tokenizer(doc)) for doc in lyrics_list]
 
+def predict(artist_name, song_name):
+    model = build_model()
+    song_dict = read_song_dict(artist_name, song_name)
+    song_pd = pd.DataFrame.from_dict(song_dict, orient='index').drop(["year", "album", "features"])
+    lyr = song_pd.values[0]
+    lyrics_list = tokenize_lyrics(lyr)
+    model.predict(lyrics_list)
+
+
 def build_model():
     # We will actually be getting all of the lyrics and valence scores for every discography, but for now we will use just one
     artist_name = "saba"
@@ -23,7 +32,8 @@ def build_model():
     train, test = train_test_split(data_pd, test_size=0.1, random_state=42)
     # use function to get train tokenized documents
     train_lyrics_list = tokenize_lyrics(train["lyrics"].values)
-    # Create vectorizer object
+    #print(train_lyrics_list)
+    # Create vectorizer object 
     train_vectorizer = TfidfVectorizer(analyzer='word', lowercase=True)
     # fit and transform tokenized lyrics
     X_train = train_vectorizer.fit_transform(train_lyrics_list).toarray()
@@ -40,9 +50,8 @@ def build_model():
     
     # get vector of trained lr_valences   
 
-    model = LogisticRegression(max_iter = 10000).fit(X_train, Y_train)
-    print(model.score(X_test, Y_test))    
-    
-    
-    
-build_model()
+    #model = LogisticRegression(max_iter = 10000).fit(X_train, Y_train)
+    #return model
+
+#build_model() 
+predict("dead kennedys", 'holiday in cambodia')
