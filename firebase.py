@@ -8,6 +8,7 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 def write_artist_dict(artist_name: str, artist_dict: dict) -> None:
+    artist_name = artist_name.lower()
     for song, info in artist_dict.items():
         if song == '':
             continue
@@ -21,6 +22,7 @@ def write_artist_dict(artist_name: str, artist_dict: dict) -> None:
         })
 
 def read_artist_dict(artist_name):
+    artist_name = artist_name.lower()
     artist_dict = db.collection(artist_name)
     docs =  artist_dict.stream()
     artist_dict = {}
@@ -29,6 +31,7 @@ def read_artist_dict(artist_name):
     return artist_dict
 
 def read_song_dict(artist_name, song_name):
+    artist_name = artist_name.lower()
     song_name = song_name.lower()
     song_name = re.sub(r'[\(\[].*?[\)\]]', '', song_name).rstrip()
     song_name = song_name.translate(str.maketrans('', '', string.punctuation)).replace('  ', ' ')
