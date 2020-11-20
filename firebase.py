@@ -1,6 +1,8 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+import string
+import re
 cred = credentials.Certificate('firebase_cred.json')
 firebase_admin.initialize_app(cred)
 db = firestore.client()
@@ -27,20 +29,21 @@ def read_artist_dict(artist_name):
     return artist_dict
 
 def read_song_dict(artist_name, song_name):
+    song_name = song_name.lower()
+    song_name = re.sub(r'[\(\[].*?[\)\]]', '', song_name).rstrip()
+    song_name = song_name.translate(str.maketrans('', '', string.punctuation)).replace('  ', ' ')
     doc_ref = db.collection(artist_name).document(song_name)
     doc = doc_ref.get()
     if doc.exists:
+        print(song_name, "found")
         return doc.to_dict()
     else: 
-        print('doc does not exist')
+        print(song_name, 'not found')
 
 def read_all_discogs():
     db_ref = db.collections()
-    count = 0
     collection_dict = {}
     for collection in db_ref:
-        count += 1
-        # doc_refs = collection.get()
         artist_name = collection.id
         docs = collection.list_documents()
         for doc in docs: 
@@ -49,6 +52,8 @@ def read_all_discogs():
                 collection_dict[artist_name + "_" + doc_obj.id] = doc_obj.to_dict()
             else:
                 print('duplicate', doc_obj.id)
-        break
-    print(collection_dict.keys())
-read_all_discogs()
+    print(len(collection_dict.keys()))
+    return collection_dict
+# read_all_discogs()
+
+read_song_dict('saba', 'B.R-O/k,EN  "GIRLS"')
