@@ -11,11 +11,11 @@ import pickle
 def tokenize_lyrics(lyrics_list):
     return [' '.join(lyric_tokenizer(doc)) for doc in lyrics_list]
 
-def predict(artist_name, song_name):
-    model = pickle.load(open('test_model.sav', 'rb'))
+def predict(song_dict):
+    model = pickle.load(open('model.sav', 'rb'))
     vectorizer = pickle.load(open('vectorizer.pk', 'rb')) 
     vocab = vectorizer.get_feature_names()
-    song_dict = read_song_dict(artist_name, song_name)
+    # song_dict = read_song_dict(artist_name, song_name)
 
     lyr = [song_dict['lyrics']]
 
@@ -25,6 +25,8 @@ def predict(artist_name, song_name):
     predict_vector = predict_vectorizer.fit_transform(lyrics_list).toarray()
 
     return model.predict(predict_vector)[0]
+
+#TODO build function 
 
 
 def build_model():
@@ -67,6 +69,8 @@ def build_model():
     model = LogisticRegression(max_iter = 10000).fit(X_train, Y_train)
     pickle.dump(model, open('model.sav', 'wb'))
 
-build_model()
+if __name__ == "__main__":
+    artist_dict = read_artist_dict('circle jerks')
+    for name, song_dict in artist_dict.items():
+        print(name,predict(song_dict))
 
-# predict("dead kennedys", 'holiday in cambodia')

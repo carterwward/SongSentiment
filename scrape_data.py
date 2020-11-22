@@ -121,9 +121,6 @@ def join_spotify_genius(artist):
     spotify_dict = get_valence(artist)
     genius_dict = get_discography(artist)
     common_keys = set(genius_dict.keys()) & set(spotify_dict.keys())
-    # print("in spot not genius Keys:", set(spotify_dict.keys()) - set(genius_dict.keys()), '\n')
-    # print("in genius not spot Keys:", set(genius_dict.keys()) - set(spotify_dict.keys()), '\n')
-    # print("Common Keys:", common_keys)
     print("len of discog", len(common_keys))
     full_dict = {}
     for key in common_keys:
