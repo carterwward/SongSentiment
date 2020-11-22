@@ -42,7 +42,10 @@ def build_model():
     
     # Split data into train and test dfs
     train, test = train_test_split(data_pd, test_size=0.25, random_state=42)
+    train.to_csv('train_data.csv')
+    test.to_csv('test_data.csv')
     # use function to get train tokenized documents
+    print('begin tokenization')
     train_lyrics_list = tokenize_lyrics(train["lyrics"].values)
     #print(train_lyrics_list)
     # Create vectorizer object 
@@ -70,7 +73,8 @@ def build_model():
     pickle.dump(model, open('model.sav', 'wb'))
 
 if __name__ == "__main__":
-    artist_dict = read_artist_dict('circle jerks')
-    for name, song_dict in artist_dict.items():
-        print(name,predict(song_dict))
+    build_model()
+    # artist_dict = read_artist_dict('circle jerks')
+    # for name, song_dict in artist_dict.items():
+    #     print(name,predict(song_dict))
 
