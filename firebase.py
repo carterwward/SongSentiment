@@ -38,7 +38,6 @@ def read_song_dict(artist_name, song_name):
     doc_ref = db.collection(artist_name).document(song_name)
     doc = doc_ref.get()
     if doc.exists:
-        print(song_name, "found")
         return doc.to_dict()
     else: 
         print(song_name, 'not found')
@@ -55,8 +54,6 @@ def read_all_discogs():
                 collection_dict[artist_name + "_" + doc_obj.id] = doc_obj.to_dict()
             else:
                 print('duplicate', doc_obj.id)
-    print(len(collection_dict.keys()))
+    # print(len(collection_dict.keys()))
     return collection_dict
-# read_all_discogs()
 
-# read_song_dict('saba', 'B.R-O/k,EN  "GIRLS"')
