@@ -11,7 +11,7 @@ def get_song_tf_idf(artist_name, song_name, num_features):
     tfidf_vectorizer = TfidfVectorizer(analyzer='word', lowercase=True, vocabulary= vocab)
 
     data_dict = read_song_dict(artist_name, song_name)
-    doc =  [' '.join(lyric_tokenizer(data_dict['lyrics']))]
+    doc =  [' '.join([lyric for lyric in lyric_tokenizer(data_dict['lyrics']) if 'igg' not in lyric])]
 
     tfidf_vectorizer_vectors=tfidf_vectorizer.fit_transform(doc)
 
@@ -23,4 +23,4 @@ def get_song_tf_idf(artist_name, song_name, num_features):
     return df.head(num_features)
 
 
-print(get_song_tf_idf('saba', "gps", 10))
+print(get_song_tf_idf('saba', "westside bound 3", 5))

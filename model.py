@@ -26,9 +26,6 @@ def predict(song_dict):
 
     return model.predict(predict_vector)[0]
 
-#TODO build function 
-
-
 def build_model():
     print('start')
     # We will actually be getting all of the lyrics and valence scores for every discography, but for now we will use just one
@@ -72,9 +69,4 @@ def build_model():
     model = LogisticRegression(max_iter = 10000).fit(X_train, Y_train)
     pickle.dump(model, open('model.sav', 'wb'))
 
-if __name__ == "__main__":
-    build_model()
-    # artist_dict = read_artist_dict('circle jerks')
-    # for name, song_dict in artist_dict.items():
-    #     print(name,predict(song_dict))
 

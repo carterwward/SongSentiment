@@ -41,6 +41,7 @@ def read_song_dict(artist_name, song_name):
         return doc.to_dict()
     else: 
         print(song_name, 'not found')
+        return {}        
 
 def read_all_discogs():
     db_ref = db.collections()
