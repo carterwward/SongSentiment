@@ -18,6 +18,7 @@ def read_test_data():
     model = pickle.load(open('model.sav', 'rb'))
     vectorizer = pickle.load(open('vectorizer.pk', 'rb')) 
     vocab = vectorizer.get_feature_names()
+    print('tokenize')
     lyrics_list = tokenize_lyrics(test["lyrics"].dropna().values)
     predict_vectorizer = TfidfVectorizer(analyzer='word', lowercase=True, vocabulary= vocab)
     X_vals = predict_vectorizer.fit_transform(lyrics_list).toarray()
@@ -40,7 +41,7 @@ def confusion_matrix(model, X_vals, Y_vals):
     fig, ax = plt.subplots(figsize=(8, 8))
     plot_confusion_matrix(model, X_vals, Y_vals, ax=ax, values_format = '.5g')
 
-#test data accuracy 0.5696551724137932
+#test data accuracy 0.5751724137931035
 def test_accuracy(model, X_vals, Y_vals):
     val_accuracy = model.score(X_vals, Y_vals)
     print("Validation Accuracy: ", val_accuracy)
@@ -79,6 +80,4 @@ def get_test_predictions(test_csv):
     predict_vectorizer = TfidfVectorizer(analyzer='word', lowercase=True, vocabulary= vocab)
     predict_vector = predict_vectorizer.fit_transform(lyrics_list).toarray()
     return model.predict(predict_vector)
-
-
 
