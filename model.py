@@ -60,8 +60,8 @@ def build_model():
     # calculating X_test, Y_test
     test_lyrics_list = tokenize_lyrics(test["lyrics"].values)
     test_vectorizer = TfidfVectorizer(analyzer='word', lowercase=True, vocabulary = train_vocab)
-    X_test = test_vectorizer.fit_transform(test_lyrics_list).toarray()
-    Y_test = test["lr_valence"].values
+    # X_test = test_vectorizer.fit_transform(test_lyrics_list).toarray()
+    # Y_test = test["lr_valence"].values
     
     
     # get vector of trained lr_valences   
