@@ -55,7 +55,7 @@ def build_model():
         pickle.dump(train_vectorizer, fin)
 
     Y_train = train["lr_valence"].values
-    train_vocab = train_vectorizer.get_feature_names()
+    # train_vocab = train_vectorizer.get_feature_names()
     
     # calculating X_test, Y_test
     # test_lyrics_list = tokenize_lyrics(test["lyrics"].values)
