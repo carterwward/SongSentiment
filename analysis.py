@@ -89,6 +89,9 @@ def most_important_words(artist_name, song_name):
     words = list(tf_idf_df.index)
     tf_idf_scores = list(tf_idf_df['tfidf'])
     sns.barplot(x = tf_idf_scores, y = words)
+    plt.title('TF-IDF Scores by Features for ' + song_name + ' by ' + artist_name)
+    plt.xlabel('TF-IDF Scores')
+    plt.ylabel('Features')
     plt.show()
-most_important_words('saba', 'broken girls')
+most_important_words('mick jenkins', 'the waters')
 
