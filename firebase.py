@@ -33,8 +33,7 @@ def read_artist_dict(artist_name):
 def read_song_dict(artist_name, song_name):
     artist_name = artist_name.lower()
     song_name = song_name.lower()
-    song_name = re.sub(r'[\(\[].*?[\)\]]', '', song_name).rstrip()
-    song_name = song_name.translate(str.maketrans('', '', string.punctuation)).replace('  ', ' ')
+    song_name = song_name.translate(str.maketrans('', '', string.punctuation)).replace('  ', ' ').strip()
     doc_ref = db.collection(artist_name).document(song_name)
     doc = doc_ref.get()
     if doc.exists:

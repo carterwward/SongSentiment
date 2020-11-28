@@ -5,12 +5,13 @@ import pickle
 import numpy as np
 import pandas as pd
 
-def get_song_tf_idf(artist_name, song_name, num_features):
+def get_song_tf_idf(data_dict, num_features):
+    # TODO: Use spacies entity attribute to sort tf_idf values based on entities
+    # TODO: then create an actual summary sentence from the top words using the different parts of speech
     vectorizer = pickle.load(open('vectorizer.pk', 'rb')) 
     vocab = vectorizer.get_feature_names()
     tfidf_vectorizer = TfidfVectorizer(analyzer='word', lowercase=True, vocabulary= vocab)
 
-    data_dict = read_song_dict(artist_name, song_name)
     doc =  [' '.join([lyric for lyric in lyric_tokenizer(data_dict['lyrics']) if 'igg' not in lyric])]
 
     tfidf_vectorizer_vectors=tfidf_vectorizer.fit_transform(doc)
@@ -21,6 +22,3 @@ def get_song_tf_idf(artist_name, song_name, num_features):
     df = pd.DataFrame(song_vector.T.todense(), index=tfidf_vectorizer.get_feature_names(), columns=["tfidf"]) 
     df = df.sort_values(by=["tfidf"],ascending=False)
     return df.head(num_features)
-
-
-print(get_song_tf_idf('saba', "westside bound 3", 5))

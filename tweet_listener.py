@@ -1,14 +1,18 @@
 import tweepy
 from twitter_cred import consumer_key, secret_key, access_key, access_secret
+from calc_tf_idf import get_song_tf_idf
 import time
 from firebase import read_song_dict
 from datetime import datetime, timedelta
+from model import predict
 
 def check_mentions(api, since_id, time_now):
     new_since_id = since_id
+    print('new check')
 
-    for tweet in tweepy.Cursor(api.mentions_timeline,
-        since_id=since_id).items():
+    for tweet in tweepy.Cursor(api.mentions_timeline, since_id=since_id).items():
+        user_handle = tweet.user.screen_name
+
 
         new_since_id = max(tweet.id, new_since_id)
 
@@ -33,20 +37,38 @@ def check_mentions(api, since_id, time_now):
 
         # Retrieve song dictionary
         song_dict = read_song_dict(artist_name, song_name)
-        print(song_dict['lyrics'])
+        # print(song_dict['valence'])
+        
+        if song_dict == {}:
+            api.update_status(
+            status= "@" + user_handle + " I can't find the song " + song_name + " or the artist " + artist_name + " please check your spelling and the list of artists I have data on in my pinned tweet.",
+            in_reply_to_status_id=tweet.id
+            )
+            continue
 
-        # TODO: retrieve top 4 words for song
 
-        # TODO: retrieve positive vs. negative prediction from predict function
+        # retrieve top 5 words for song
+        rank_df = get_song_tf_idf(song_dict, 5)
+        # retrieve positive vs. negative prediction from predict function
+        song_pred = predict(song_dict)
 
-        # TODO: create response string
+        # create response string
+        # TODO: Change response to say: artist talks about blank, blank, ... and blank to convey generally ___ emotions
+        response = ' The top five most important words in ' + song_name + ' are'
+        for word in rank_df.index:
+            response += ' ' + word + ','
+        response = response.rstrip(',')  
+        response += '. '
 
-        user_handle = tweet.user.screen_name
+        if song_pred == 1:
+            response += artist_name + " is talking about these things in a generally positive way."
+        else:
+            response += artist_name + " is talking about these things in a generally negative way."
 
-        # api.update_status(+
-        #     status= "@" + user_handle + " hello friend",
-        #     in_reply_to_status_id=tweet.id
-        # )
+        api.update_status(
+            status= "@" + user_handle + response,
+            in_reply_to_status_id=tweet.id
+        )
     return new_since_id
 
 def main():
@@ -61,7 +83,7 @@ def main():
 
     while True:
         since_id = check_mentions(api, since_id, time_now)
-        time.sleep(15)
+        time.sleep(10)
 
 if __name__ == "__main__":
     main()
