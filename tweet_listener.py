@@ -54,7 +54,7 @@ def check_mentions(api, since_id, time_now):
 
         # create response string
         # Change response to say: artist talks about blank, blank, ... and blank to convey generally ___ emotions
-        response = ' ' + artist_name + ' talks about'
+        response = ' ' + artist_name + ' uses words like'
         for word in rank_df.index:
             response += ' ' + word + ',' 
         response += ' to convey '
