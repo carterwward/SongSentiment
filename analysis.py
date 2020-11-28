@@ -1,4 +1,5 @@
 from firebase import read_song_dict, read_artist_dict, read_all_discogs
+from calc_tf_idf import get_song_tf_idf
 from process import lyric_tokenizer
 from model import predict, tokenize_lyrics
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -80,4 +81,14 @@ def get_test_predictions(test_csv):
     predict_vectorizer = TfidfVectorizer(analyzer='word', lowercase=True, vocabulary= vocab)
     predict_vector = predict_vectorizer.fit_transform(lyrics_list).toarray()
     return model.predict(predict_vector)
+
+def most_important_words(artist_name, song_name):
+    song_dict = read_song_dict(artist_name, song_name)
+    tf_idf_df = get_song_tf_idf(song_dict, 20)
+
+    words = list(tf_idf_df.index)
+    tf_idf_scores = list(tf_idf_df['tfidf'])
+    sns.barplot(x = tf_idf_scores, y = words)
+    plt.show()
+most_important_words('saba', 'broken girls')
 
