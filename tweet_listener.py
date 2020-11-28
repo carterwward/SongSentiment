@@ -53,17 +53,16 @@ def check_mentions(api, since_id, time_now):
         song_pred = predict(song_dict)
 
         # create response string
-        # TODO: Change response to say: artist talks about blank, blank, ... and blank to convey generally ___ emotions
-        response = ' The top five most important words in ' + song_name + ' are'
+        # Change response to say: artist talks about blank, blank, ... and blank to convey generally ___ emotions
+        response = ' ' + artist_name + ' talks about'
         for word in rank_df.index:
-            response += ' ' + word + ','
-        response = response.rstrip(',')  
-        response += '. '
+            response += ' ' + word + ',' 
+        response += ' to convey '
 
         if song_pred == 1:
-            response += artist_name + " is talking about these things in a generally positive way."
+            response += "generally positive emotions in " + song_name + '.'
         else:
-            response += artist_name + " is talking about these things in a generally negative way."
+            response += "generally negative emotions in " + song_name + '.'
 
         api.update_status(
             status= "@" + user_handle + response,
