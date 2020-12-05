@@ -41,41 +41,46 @@ def build_model():
     # train, test = train_test_split(data_pd, test_size=0.25, random_state=42)
     # train.to_csv('train_data.csv')
     # test.to_csv('test_data.csv')
-    train = pd.read_csv('train_data.csv').dropna()
+    # train = pd.read_csv('train_data.csv').dropna()
     # use function to get train tokenized documents
-    print('begin tokenization')
-    print(len(train["lyrics"].values))
-    train_lyrics_list = tokenize_lyrics(train["lyrics"].values)
-    print(len(train_lyrics_list))
-    print(train_lyrics_list[0])
-    train['tokenized_lyrics'] = train_lyrics_list
-    train.to_csv('tokenized_train_data.csv')
+    # print('begin tokenization')
+    # print(len(train["lyrics"].values))
+    # train_lyrics_list = tokenize_lyrics(train["lyrics"].values)
+    # print(len(train_lyrics_list))
+    # print(train_lyrics_list[0])
+    # train['tokenized_lyrics'] = train_lyrics_list
+    # train.to_csv('tokenized_train_data.csv')
     #print(train_lyrics_list)
     # Create vectorizer object 
-    print('begin vectorizer')
-    train_vectorizer = TfidfVectorizer(lowercase=True)
+    # print('begin vectorizer')
+    # train_vectorizer = TfidfVectorizer(lowercase=True)
     # fit and transform tokenized lyrics
-    X_train = train_vectorizer.fit_transform(train_lyrics_list).toarray()
-    print(len(list(train_vectorizer.get_feature_names())))
+    # X_train = train_vectorizer.fit_transform(train_lyrics_list).toarray()
+    # print(len(list(train_vectorizer.get_feature_names())))
     # save vectorizer
-    print('save vectorizer')
-    with open('larger_vectorizer.pk', 'wb') as fin:
-        pickle.dump(train_vectorizer, fin)
+    # print('save vectorizer')
+    # with open('larger_vectorizer.pk', 'wb') as fin:
+    #     pickle.dump(train_vectorizer, fin)
 
-    Y_train = train["lr_valence"].values
+    # Y_train = train["lr_valence"].values
     # train_vocab = train_vectorizer.get_feature_names()
     
-    # calculating X_test, Y_test
-    # test_lyrics_list = tokenize_lyrics(test["lyrics"].values)
+    # calculating X_test, Y_test/
+    test = pd.read_csv('test_data.csv').dropna()
+    print('tokenizing')
+    test_lyrics_list = tokenize_lyrics(test["lyrics"].values)
+
+    test['tokenized_lyrics'] = test_lyrics_list
+    test.to_csv('tokenized_test_data.csv')
     # test_vectorizer = TfidfVectorizer(analyzer='word', lowercase=True, vocabulary = train_vocab)
     # X_test = test_vectorizer.fit_transform(test_lyrics_list).toarray()
     # Y_test = test["lr_valence"].values
     
     
     # get vector of trained lr_valences   
-    print('save model')
-    model = LogisticRegression(max_iter = 10000).fit(X_train, Y_train)
-    pickle.dump(model, open('more_feature_model.sav', 'wb'))
+    # print('save model')
+    # model = LogisticRegression(max_iter = 10000).fit(X_train, Y_train)
+    # pickle.dump(model, open('more_feature_model.sav', 'wb'))
 
 
-# build_model()
+build_model()
