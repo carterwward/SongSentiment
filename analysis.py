@@ -31,11 +31,11 @@ def read_test_data():
     return model, vocab, X_vals, Y_vals
 
 def read_train_data():
-    train = pd.read_csv("train_data.csv").dropna()
+    train = pd.read_csv("tokenized_train_data.csv").dropna()
     model = pickle.load(open('more_feature_model.sav', 'rb'))
     vectorizer = pickle.load(open('larger_vectorizer.pk', 'rb')) 
     vocab = vectorizer.get_feature_names()
-    lyrics_list = tokenize_lyrics(train["lyrics"].values)
+    lyrics_list = train["tokenized_lyrics"].values
     predict_vectorizer = TfidfVectorizer(analyzer='word', lowercase=True, vocabulary= vocab)
     X_train = predict_vectorizer.fit_transform(lyrics_list).toarray()
     Y_train = train["lr_valence"]
@@ -123,9 +123,10 @@ def calculate_and_graph_tf(feature_list, tokenized_lyrics):
 # print(len(vocab))
 # test_accuracy(model, X_vals, Y_vals)
 # feature_analysis(model, vocab)
-vectorizer = pickle.load(open('larger_vectorizer.pk', 'rb')) 
-vocab = vectorizer.get_feature_names()
-train = pd.read_csv("tokenized_train_data.csv")
-tokenized_lyrics = list(train['tokenized_lyrics'].values)
-print(len(tokenized_lyrics))
-calculate_and_graph_tf(vocab, tokenized_lyrics)
+# vectorizer = pickle.load(open('larger_vectorizer.pk', 'rb')) 
+# vocab = vectorizer.get_feature_names()
+# train = pd.read_csv("tokenized_train_data.csv")
+# tokenized_lyrics = list(train['tokenized_lyrics'].values)
+# print(len(tokenized_lyrics))
+# calculate_and_graph_tf(vocab, tokenized_lyrics)
+# read_train_data()
