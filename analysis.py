@@ -16,15 +16,11 @@ from sklearn import metrics
 import re
 
 def read_test_data():
-    test = pd.read_csv("test_data.csv").dropna()
-    # model = pickle.load(open('model.sav', 'rb'))
+    test = pd.read_csv("tokenized_test_data.csv").dropna()
     model = pickle.load(open('more_feature_model.sav', 'rb'))
-    # vectorizer = pickle.load(open('vectorizer.pk', 'rb')) 
     vectorizer = pickle.load(open('larger_vectorizer.pk', 'rb')) 
     vocab = vectorizer.get_feature_names()
-    # print(vocab)
-    print('tokenize')
-    lyrics_list = tokenize_lyrics(test["lyrics"].dropna().values)
+    lyrics_list = test["tokenized_lyrics"].values
     predict_vectorizer = TfidfVectorizer(analyzer='word', lowercase=True, vocabulary= vocab)
     X_vals = predict_vectorizer.fit_transform(lyrics_list).toarray()
     Y_vals = test["lr_valence"]
