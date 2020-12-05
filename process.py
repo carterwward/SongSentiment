@@ -17,7 +17,7 @@ def lemmatizer(doc):
 
 
 def remove_stopwords(doc):
-    doc = [str(token) for token in doc if token.is_stop != True and token.is_punct !=
+    doc = [str(token).lower() for token in doc if token.is_stop != True and token.is_punct !=
            True and token.is_digit != True and token.is_space != True]
     return doc
 
@@ -25,7 +25,7 @@ def remove_stopwords(doc):
 def lyric_tokenizer(doc):
     nlp = spacy.load('en_core_web_sm')
     stops = ["yeah", '\n', 'intro', 'hook', 'verse', 'yes', 'oh', 'chorus', 'like', 'hey', 'okay',
-    'uh', 'blah', 'ooooooh', 'woah', 'la', 'aight', 'whoa', 'til', 'o', 'huh']
+    'uh', 'blah', 'ooooooh', 'woah', 'la', 'aight', 'whoa', 'til', 'o', 'huh', 'ya']
     nlp.Defaults.stop_words.update(stops)
     nlp.add_pipe(lemmatizer, name="lemmatizer", after="ner")
     nlp.add_pipe(remove_stopwords, name="stopwords", last=True)

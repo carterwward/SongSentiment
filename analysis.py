@@ -13,12 +13,16 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import plot_confusion_matrix
 from sklearn import metrics
+import re
 
 def read_test_data():
     test = pd.read_csv("test_data.csv").dropna()
-    model = pickle.load(open('model.sav', 'rb'))
-    vectorizer = pickle.load(open('vectorizer.pk', 'rb')) 
+    # model = pickle.load(open('model.sav', 'rb'))
+    model = pickle.load(open('more_feature_model.sav', 'rb'))
+    # vectorizer = pickle.load(open('vectorizer.pk', 'rb')) 
+    vectorizer = pickle.load(open('larger_vectorizer.pk', 'rb')) 
     vocab = vectorizer.get_feature_names()
+    # print(vocab)
     print('tokenize')
     lyrics_list = tokenize_lyrics(test["lyrics"].dropna().values)
     predict_vectorizer = TfidfVectorizer(analyzer='word', lowercase=True, vocabulary= vocab)
@@ -28,8 +32,8 @@ def read_test_data():
 
 def read_train_data():
     train = pd.read_csv("train_data.csv").dropna()
-    model = pickle.load(open('model.sav', 'rb'))
-    vectorizer = pickle.load(open('vectorizer.pk', 'rb')) 
+    model = pickle.load(open('more_feature_model.sav', 'rb'))
+    vectorizer = pickle.load(open('larger_vectorizer.pk', 'rb')) 
     vocab = vectorizer.get_feature_names()
     lyrics_list = tokenize_lyrics(train["lyrics"].values)
     predict_vectorizer = TfidfVectorizer(analyzer='word', lowercase=True, vocabulary= vocab)
@@ -67,6 +71,14 @@ def feature_analysis(model, vocab):
 def ROC_curve(model, X_train, Y_train):
     metrics.plot_roc_curve(model, X_train, Y_train)
 
+def compare_auc():
+    model, vocab, X_vals, Y_vals = read_test_data()
+    model, X_train, Y_train = read_train_data()
+
+    ROC_curve(model, X_train, Y_train)
+    ROC_curve(model, X_vals, Y_vals)
+
+
 #train data accuracy 0.6972350230414747
 def train_accuracy(model, X_train, Y_train):
     val_accuracy = model.score(X_train, Y_train)
@@ -93,5 +105,27 @@ def most_important_words(artist_name, song_name):
     plt.xlabel('TF-IDF Scores')
     plt.ylabel('Features')
     plt.show()
-most_important_words('mick jenkins', 'the waters')
 
+def calculate_and_graph_tf(feature_list, tokenized_lyrics):
+    feature_props = []
+    for word in feature_list:
+        term_count = 0
+        for tokens in tokenized_lyrics:
+            doc_count = sum(1 for _ in re.finditer(r'\b%s\b' % re.escape(word), tokens))
+            if doc_count != 0:
+                term_count +=1
+        feature_props.append(term_count/len(tokenized_lyrics))
+    sns.distplot(feature_props)
+    plt.show()
+
+
+# model, vocab, X_vals, Y_vals = read_test_data()
+# print(len(vocab))
+# test_accuracy(model, X_vals, Y_vals)
+# feature_analysis(model, vocab)
+vectorizer = pickle.load(open('larger_vectorizer.pk', 'rb')) 
+vocab = vectorizer.get_feature_names()
+train = pd.read_csv("tokenized_train_data.csv")
+tokenized_lyrics = list(train['tokenized_lyrics'].values)
+print(len(tokenized_lyrics))
+calculate_and_graph_tf(vocab, tokenized_lyrics)

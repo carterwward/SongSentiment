@@ -30,28 +30,36 @@ def build_model():
     print('start')
     # We will actually be getting all of the lyrics and valence scores for every discography, but for now we will use just one
     # artist_name = "saba"
-    print('reading entire database')
-    data_dict = read_all_discogs()
-    lr_valence = [1 if song_dict['valence'] > 0.5 else 0 for song_dict in data_dict.values()]
-    data_pd = pd.DataFrame.from_dict(data_dict, orient='index').drop(columns = ["year", "album", "features"])
-    data_pd["lr_valence"] = lr_valence
+    # print('reading entire database')
+    # data_dict = read_all_discogs()
+    # lr_valence = [1 if song_dict['valence'] > 0.5 else 0 for song_dict in data_dict.values()]
+    # data_pd = pd.DataFrame.from_dict(data_dict, orient='index').drop(columns = ["year", "album", "features"])
+    # data_pd["lr_valence"] = lr_valence
 
     
     # Split data into train and test dfs
-    train, test = train_test_split(data_pd, test_size=0.25, random_state=42)
-    train.to_csv('train_data.csv')
-    test.to_csv('test_data.csv')
+    # train, test = train_test_split(data_pd, test_size=0.25, random_state=42)
+    # train.to_csv('train_data.csv')
+    # test.to_csv('test_data.csv')
+    train = pd.read_csv('train_data.csv').dropna()
     # use function to get train tokenized documents
     print('begin tokenization')
+    print(len(train["lyrics"].values))
     train_lyrics_list = tokenize_lyrics(train["lyrics"].values)
+    print(len(train_lyrics_list))
+    print(train_lyrics_list[0])
+    train['tokenized_lyrics'] = train_lyrics_list
+    train.to_csv('tokenized_train_data.csv')
     #print(train_lyrics_list)
     # Create vectorizer object 
-    train_vectorizer = TfidfVectorizer(analyzer='word', lowercase=True, max_df = 0.95, min_df=0.05)
+    print('begin vectorizer')
+    train_vectorizer = TfidfVectorizer(lowercase=True)
     # fit and transform tokenized lyrics
     X_train = train_vectorizer.fit_transform(train_lyrics_list).toarray()
+    print(len(list(train_vectorizer.get_feature_names())))
     # save vectorizer
     print('save vectorizer')
-    with open('vectorizer.pk', 'wb') as fin:
+    with open('larger_vectorizer.pk', 'wb') as fin:
         pickle.dump(train_vectorizer, fin)
 
     Y_train = train["lr_valence"].values
@@ -67,6 +75,7 @@ def build_model():
     # get vector of trained lr_valences   
     print('save model')
     model = LogisticRegression(max_iter = 10000).fit(X_train, Y_train)
-    pickle.dump(model, open('model.sav', 'wb'))
+    pickle.dump(model, open('more_feature_model.sav', 'wb'))
 
 
+# build_model()
