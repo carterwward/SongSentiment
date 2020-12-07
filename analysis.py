@@ -114,6 +114,19 @@ def calculate_and_graph_tf(feature_list, tokenized_lyrics):
     sns.distplot(feature_props)
     plt.show()
 
+#all_features l1 accuracy = 0.5682758620689655
+#all_features l2 accuracy = 0.5613793103448276
+def cross_validation(penalty):
+    #read in train and test data
+    model, X, y = read_train_data()
+    model, vocab, X_vals, Y_vals = read_test_data()
+    #train model with penalty
+    clf = LogisticRegressionCV(penalty=penalty, solver='liblinear', max_iter = 10000).fit(X, y)
+    #print model accuracy
+    print(clf.score(X_vals,Y_vals))
+    #get model parameters
+    print(clf.get_params())
+
 
 # model, vocab, X_vals, Y_vals = read_test_data()
 # print(len(vocab))
