@@ -24,7 +24,7 @@ def predict(song_dict):
     predict_vectorizer = TfidfVectorizer(analyzer='word', lowercase=True, vocabulary= vocab)
     predict_vector = predict_vectorizer.fit_transform(lyrics_list).toarray()
 
-    return model.predict(predict_vector)[0]
+    return model.predict(predict_vector)
 
 def build_model():
     print('start')
@@ -55,7 +55,7 @@ def build_model():
     # print('begin vectorizer')
     # train_vectorizer = TfidfVectorizer(lowercase=True)
     # fit and transform tokenized lyrics
-    # X_train = train_vectorizer.fit_transform(train_lyrics_list).toarray()
+    X_train = train_vectorizer.fit_transform(train_lyrics_list).toarray()
     # print(len(list(train_vectorizer.get_feature_names())))
     # save vectorizer
     # print('save vectorizer')
