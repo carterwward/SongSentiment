@@ -86,7 +86,7 @@ def main():
 
     while True:
         since_id = check_mentions(api, since_id, time_now)
-        time.sleep(10)
+        time.sleep(30)
 
 if __name__ == "__main__":
     main()
