@@ -142,5 +142,5 @@ def scrape_artists(artist_names):
         time.sleep(40)
 
 if __name__ == "__main__":
-    artist_names = []
+    artist_names = ['elton aura']
     scrape_artists(artist_names)
