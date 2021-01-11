@@ -21,6 +21,13 @@ def write_artist_dict(artist_name: str, artist_dict: dict) -> None:
             u'lyrics': info['lyrics']
         })
 
+def update_song_doc(artist_name: str, song_name: str, field: str, value):
+    doc_ref = db.collection(artist_name).document(song_name)
+
+    doc_ref.set({
+        field: value
+        }, merge=True)
+
 def read_artist_dict(artist_name):
     artist_name = artist_name.lower()
     artist_dict = db.collection(artist_name)
@@ -57,3 +64,4 @@ def read_all_discogs():
 
     return collection_dict
 
+update_song_doc('99 neighbors', '19', 'test_field', 'test')
