@@ -55,7 +55,7 @@ def calc_artist_hedo_valence(artist, hedo_df, word_valence_dict):
 # TODO: Train new model on hedonometer valence scores
 
 if __name__ == '__main__':
-    lyrics = firebase.read_song_dict('billy joel', 'zanzibar')['lyrics']
+    lyrics = firebase.read_song_dict('frank ocean', 'self control')['lyrics']
     tok_lyrics = lyric_tokenizer(lyrics)
     hedonometer = pd.read_csv("data_and_models/Hedonometer.csv")
     word_valence_dict = {row['Word']: row['Happiness Score'] for index, row in hedonometer.iterrows()}
