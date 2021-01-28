@@ -14,6 +14,8 @@ def calc_hedo_valence(tok_lyrics, hedo_df, word_valence_dict):
     valence_scores = [word_valence_dict[word] for word in available_lyrics]
     return sum(valence_scores) / len(valence_scores)
 
+
+# TODO: write function to pull all firebase songs, calculate valence, and update fb
 # def calc_hedo_valence_update_fb():
 #     print('start')
 #     print('reading entire database')
@@ -39,18 +41,7 @@ def calc_artist_hedo_valence(artist, hedo_df, word_valence_dict):
     # print(sum_valence)
     return(sum_valence/len_valence)
 
-
-
-
-# TODO: write function to pull all firebase songs, calculate valence, and update fb
-
-# TODO: write function to calculate valence for artist
-
 # TODO: write function to calculate valence for album
-
-# TODO: FOR ANALYSIS: scatter plot of hedo word happiness scores and associations scores from model
-
-# TODO: FOR ANALYSIS: scatter plot of song valence scores from spotify and hedo calculated song valence scores
 
 # TODO: Train new model on hedonometer valence scores
 

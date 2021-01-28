@@ -1,10 +1,9 @@
 import tweepy
 from twitter_cred import consumer_key, secret_key, access_key, access_secret
-from calc_tf_idf import get_song_tf_idf
 import time
 from firebase import read_song_dict
 from datetime import datetime, timedelta
-from model import predict
+from model_functions import predict, get_song_tf_idf
 
 def check_mentions(api, since_id, time_now):
     new_since_id = since_id

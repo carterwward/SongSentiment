@@ -1,7 +1,7 @@
-from firebase import read_song_dict, read_artist_dict, read_all_discogs
-from calc_tf_idf import get_song_tf_idf
-from process import lyric_tokenizer
-from model import predict, tokenize_lyrics
+from ..twitter_bot.firebase import read_song_dict, read_artist_dict, read_all_discogs
+from ..twitter_bot.calc_tf_idf import get_song_tf_idf
+from ..twitter_bot.process import lyric_tokenizer
+from ..twitter_bot.model import predict, tokenize_lyrics
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.linear_model import LogisticRegression
@@ -41,12 +41,11 @@ def read_train_data():
 
 def confusion_matrix(model, X_vals, Y_vals):
     fig, ax = plt.subplots(figsize=(8, 8))
-    plot_confusion_matrix(model, X_vals, Y_vals, ax=ax, values_format = '.5g')
+    return plot_confusion_matrix(model, X_vals, Y_vals, ax=ax, values_format = '.5g')
 
 #test data accuracy 0.5751724137931035
 def test_accuracy(model, X_vals, Y_vals):
-    val_accuracy = model.score(X_vals, Y_vals)
-    print("Validation Accuracy: ", val_accuracy)
+    return model.score(X_vals, Y_vals)
 
 
 #graph 10 most positive and 10 most negative features
@@ -58,28 +57,22 @@ def feature_analysis(model, vocab):
     top_10_neg = feature.sort_values(["Coefficient"])["Feature"].head(10)
     top_10_pos = feature.sort_values(["Coefficient"])["Feature"].tail(10)
     df = pd.concat([feature.sort_values(["Coefficient"]).head(10), feature.sort_values(["Coefficient"]).tail(10)])
-    print(type(df))
-    print("Words most negatively associated:",top_10_neg)
-    print("Words most positively associated:",top_10_pos)
     fig, ax = plt.subplots(figsize=(8, 8))
-    plot = sns.barplot(x = "Coefficient", y = "Feature", data=df, ax=ax)
+    return sns.barplot(x = "Coefficient", y = "Feature", data=df, ax=ax)
 
 #create ROC curve
 def ROC_curve(model, X_train, Y_train):
-    metrics.plot_roc_curve(model, X_train, Y_train)
+    return metrics.plot_roc_curve(model, X_train, Y_train)
 
 def compare_auc():
     model, vocab, X_vals, Y_vals = read_test_data()
     model, X_train, Y_train = read_train_data()
 
-    ROC_curve(model, X_train, Y_train)
-    ROC_curve(model, X_vals, Y_vals)
+    return ROC_curve(model, X_train, Y_train), ROC_curve(model, X_vals, Y_vals)
 
 
-#train data accuracy 0.6972350230414747
-def train_accuracy(model, X_train, Y_train):
-    val_accuracy = model.score(X_train, Y_train)
-    print("Validation Accuracy: ", val_accuracy)
+def get_accuracy(model, X_val, Y_val):
+    return model.score(X_val, Y_val)
 
 def get_test_predictions(test_csv):
     test = pd.read_csv(test_csv)
@@ -112,11 +105,8 @@ def calculate_and_graph_tf(feature_list, tokenized_lyrics):
             if doc_count != 0:
                 term_count +=1
         feature_props.append(term_count/len(tokenized_lyrics))
-    sns.distplot(feature_props)
-    plt.show()
+    return sns.distplot(feature_props)
 
-#all_features l1 accuracy = 0.5682758620689655
-#all_features l2 accuracy = 0.5613793103448276
 def cross_validation(penalty):
     #read in train and test data
     model, X, y = read_train_data()
@@ -127,16 +117,3 @@ def cross_validation(penalty):
     print(clf.score(X_vals,Y_vals))
     #get model parameters
     print(clf.get_params())
-
-
-# model, vocab, X_vals, Y_vals = read_test_data()
-# print(len(vocab))
-# test_accuracy(model, X_vals, Y_vals)
-# feature_analysis(model, vocab)
-# vectorizer = pickle.load(open('larger_vectorizer.pk', 'rb')) 
-# vocab = vectorizer.get_feature_names()
-# train = pd.read_csv("tokenized_train_data.csv")
-# tokenized_lyrics = list(train['tokenized_lyrics'].values)
-# print(len(tokenized_lyrics))
-# calculate_and_graph_tf(vocab, tokenized_lyrics)
-# read_train_data()
