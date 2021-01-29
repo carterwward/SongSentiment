@@ -3,7 +3,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import string
 import re
-cred = credentials.Certificate('twitter_bot/firebase_cred.json')
+cred = credentials.Certificate('twitter_bot_functions/firebase_cred.json')
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
@@ -63,5 +63,3 @@ def read_all_discogs():
                 print('duplicate', doc_obj.id)
 
     return collection_dict
-
-update_song_doc('99 neighbors', '19', 'test_field', 'test')

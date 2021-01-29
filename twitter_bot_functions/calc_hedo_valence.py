@@ -3,7 +3,6 @@ score for lyrics of song based on the average valence score of the tokens that a
 hedonometer dataset"""
 import firebase_functions
 from process import lyric_tokenizer
-import firebase
 import pandas as pd
 import os
 
@@ -11,7 +10,8 @@ def calc_hedo_valence(tok_lyrics, hedo_df, word_valence_dict):
     available_set = set(tok_lyrics) & set(hedo_df['Word'].values)
     # print(tok_lyrics)
     available_lyrics = [word for word in tok_lyrics if word in available_set]
-    valence_scores = [word_valence_dict[word] for word in available_lyrics]
+    valence_scores = [word_valence_dict[word] for word in available_lyrics if word_valence_dict[word] >= 7.0 or word_valence_dict[word] <= 4.0]
+    print(len(valence_scores))
     return sum(valence_scores) / len(valence_scores)
 
 
