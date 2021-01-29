@@ -10,10 +10,10 @@ def calc_hedo_valence(tok_lyrics, hedo_df, word_valence_dict):
     available_set = set(tok_lyrics) & set(hedo_df['Word'].values)
     # print(tok_lyrics)
     available_lyrics = [word for word in tok_lyrics if word in available_set]
-    valence_scores = [word_valence_dict[word] for word in available_lyrics if word_valence_dict[word] >= 7.0 or word_valence_dict[word] <= 3.5]
-    print(len(valence_scores))
-    return(len(valence_scores))
-    # return sum(valence_scores) / len(valence_scores)
+    valence_scores = [word_valence_dict[word] for word in available_lyrics if word_valence_dict[word] >= 6.75 or word_valence_dict[word] <= 4.5]
+    if len(valence_scores) <= 8:
+        return -1
+    return sum(valence_scores) / len(valence_scores)
 
 
 # TODO: write function to pull all firebase songs, calculate valence, and update fb
@@ -52,5 +52,5 @@ def calc_artist_hedo_valence(artist, hedo_df, word_valence_dict):
 #     hedonometer = pd.read_csv("data_and_models/Hedonometer.csv")
 #     word_valence_dict = {row['Word']: row['Happiness Score'] for index, row in hedonometer.iterrows()}
 #     print(calc_hedo_valence(tok_lyrics, hedonometer, word_valence_dict))
-#     # print(calc_artist_hedo_valence('99 neighbors', hedonometer, word_valence_dict))
+    # print(calc_artist_hedo_valence('99 neighbors', hedonometer, word_valence_dict))
 
