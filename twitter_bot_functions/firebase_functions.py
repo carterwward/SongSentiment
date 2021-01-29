@@ -3,7 +3,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import string
 import re
-cred = credentials.Certificate('twitter_bot_functions/firebase_cred.json')
+cred = credentials.Certificate('firebase_cred.json')
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
