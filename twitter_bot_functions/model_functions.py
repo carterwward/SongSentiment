@@ -1,4 +1,4 @@
-from firebase import read_song_dict, read_artist_dict, read_all_discogs
+from firebase_functions import read_song_dict, read_artist_dict, read_all_discogs
 from process import lyric_tokenizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split, cross_val_score

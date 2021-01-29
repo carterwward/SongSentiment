@@ -1,7 +1,7 @@
 """Program will leverage hedonometer scores from computational story lab at UVM to calculate a valence
 score for lyrics of song based on the average valence score of the tokens that appear in the 
 hedonometer dataset"""
-
+import firebase_functions
 from process import lyric_tokenizer
 import firebase
 import pandas as pd
@@ -26,7 +26,7 @@ def calc_hedo_valence(tok_lyrics, hedo_df, word_valence_dict):
 
 
 def calc_artist_hedo_valence(artist, hedo_df, word_valence_dict):
-    artist_dict = firebase.read_artist_dict(artist)
+    artist_dict = firebase_functions.read_artist_dict(artist)
     sum_valence = 0
     len_valence = 0
     for key in artist_dict.keys():
@@ -46,7 +46,7 @@ def calc_artist_hedo_valence(artist, hedo_df, word_valence_dict):
 # TODO: Train new model on hedonometer valence scores
 
 if __name__ == '__main__':
-    lyrics = firebase.read_song_dict('frank ocean', 'self control')['lyrics']
+    lyrics = firebase_functions.read_song_dict('frank ocean', 'self control')['lyrics']
     tok_lyrics = lyric_tokenizer(lyrics)
     hedonometer = pd.read_csv("data_and_models/Hedonometer.csv")
     word_valence_dict = {row['Word']: row['Happiness Score'] for index, row in hedonometer.iterrows()}

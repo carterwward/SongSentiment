@@ -1,7 +1,6 @@
-from ..twitter_bot.firebase import read_song_dict, read_artist_dict, read_all_discogs
-from ..twitter_bot.calc_tf_idf import get_song_tf_idf
-from ..twitter_bot.process import lyric_tokenizer
-from ..twitter_bot.model import predict, tokenize_lyrics
+from firebase_functions import read_song_dict, read_artist_dict, read_all_discogs
+from process import lyric_tokenizer
+from model_functions import predict, tokenize_lyrics
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.linear_model import LogisticRegression
